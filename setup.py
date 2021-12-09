@@ -9,9 +9,11 @@ import sys
 
 try:
     from setuptools import setup, Command
+
     setuptools_available = True
 except ImportError:
     from distutils.core import setup, Command
+
     setuptools_available = False
 from distutils.spawn import spawn
 
@@ -70,7 +72,8 @@ else:
         resfiles = []
         for fn in files:
             if not os.path.exists(fn):
-                warnings.warn('Skipping file %s since it is not present. Type  make  to build all automatically generated files.' % fn)
+                warnings.warn(
+                    'Skipping file %s since it is not present. Type  make  to build all automatically generated files.' % fn)
             else:
                 resfiles.append(fn)
         data_files.append((dirname, resfiles))
@@ -82,6 +85,7 @@ else:
         params['entry_points'] = {'console_scripts': ['youtube-dl = youtube_dl:main']}
     else:
         params['scripts'] = ['bin/youtube-dl']
+
 
 class build_lazy_extractors(Command):
     description = 'Build the extractor lazy loading module'
@@ -98,6 +102,7 @@ class build_lazy_extractors(Command):
             [sys.executable, 'devscripts/make_lazy_extractors.py', 'youtube_dl/extractor/lazy_extractors.py'],
             dry_run=self.dry_run,
         )
+
 
 setup(
     name='youtube_dl',
